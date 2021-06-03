@@ -119,6 +119,10 @@ class ModelInjection(nn.Module) :
 		self.c1 = nn.Sequential(
 			nn.Conv2d(3, 32, 3, 1, 1),
 			nn.ReLU(),
+			nn.BatchNorm2d(32),
+			nn.Conv2d(32, 32, 3, 1, 1),
+			nn.ReLU(),
+			nn.BatchNorm2d(32),
 		)
 
 	def forward(self, x: torch.Tensor) -> List[torch.Tensor] :
@@ -167,7 +171,7 @@ class MDEQModelBackbone(nn.Module) :
 class MDEQModelCifar10(MDEQModelBackbone) :
 	def __init__(self, cfg: dict[str: Any], f: ModelF, inject: ModelInjection):
 		super(MDEQModelCifar10, self).__init__(cfg, f, inject)
-		self.cls = nn.Linear(256, 10)
+		self.cls = nn.Sequential(nn.Linear(256, 128), nn.BatchNorm1d(128), nn.Linear(128, 10))
 
 	def forward(self, x: torch.Tensor, train_step = -1, **kwargs) :
 		h = super().forward(x, train_step, **kwargs)

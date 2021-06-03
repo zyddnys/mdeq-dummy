@@ -90,7 +90,7 @@ def main() :
 		'num_layers': 10,
 		'f_thres': 22,
 		'b_thres': 24,
-		'pretrain_steps' : 200,
+		'pretrain_steps' : 1000,
 	}
 	f = ModelF(cfg).cuda()
 	inject = ModelInjection(cfg).cuda()
