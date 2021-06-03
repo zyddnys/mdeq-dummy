@@ -7,3 +7,5 @@ A simple demo of cifar10 can be found in [models_cifar10.py](models_cifar10.py).
 2. You can find comments in the file instructing you to fill missing modules.
 3. The final model can be imported by importing `MDEQModelYourModel` from the file, of course you can change its name.
 
+# Acknowledgement
+A lot of codes are directly copied from the original MDEQ repo.
