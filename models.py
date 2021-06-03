@@ -60,7 +60,7 @@ class MDEQModelBackbone(nn.Module) :
 		self.inject = inject
 		self.f_copy = copy.deepcopy(self.f)
 			
-		for param in self.f.parameters():
+		for param in self.f_copy.parameters():
 			param.requires_grad_(False)
 		self.deq = MDEQWrapper(self.f, self.f_copy)
 
@@ -83,7 +83,9 @@ class MDEQModelBackbone(nn.Module) :
 		else:
 			if train_step == self.pretrain_steps:
 				torch.cuda.empty_cache()
-		return self.deq(z_list, x_list, threshold=f_thres, train_step=train_step, writer=writer)
+				print('Switching to DEQ')
+			z_list = self.deq(z_list, x_list, threshold=f_thres, train_step=train_step, writer=writer)
+		return z_list
 
 class MDEQModelYourModel(MDEQModelBackbone) :
 	def __init__(self, cfg: dict[str: Any]):
