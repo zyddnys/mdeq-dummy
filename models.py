@@ -16,6 +16,8 @@ class ModelF(nn.Module) :
 		"""
 		Fill here with your implementation of function f, z[i+1]=f(z[i],x)
 		length of z_list and x_list must be the same
+		shape of tensors in z_list and x_list must be the same
+		DO NOT use BatchNorm or anything that can leak information between samples here
 		params:
 			z_list: list of z tensors, the fixed point to be solved
 			x_list: list of x tensors, input injection
@@ -45,6 +47,7 @@ class ModelInjection(nn.Module) :
 		Fill here with your implementation of input injection
 		This module takes your input and extend it to a list of input injections for all scales
 		(Notice you can change the input of this module to whatever you need)
+		You can use BatchNorm here
 		params:
 			x: your single input
 		returns:
