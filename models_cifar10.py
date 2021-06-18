@@ -25,10 +25,15 @@ class BasicBlock(nn.Module) :
 
 		self.bn5 = nn.GroupNorm(planes // 8, planes)
 
+		self.x_conv = nn.Conv2d(planes, planes, 1)
+		self.z_conv = nn.Conv2d(planes, planes, 1)
+		self.gate_conv = nn.Conv2d(planes, planes, 1)
+
 	def forward(self, x, injection = None):
 		shortcut = x
 		if injection is not None :
-			x = x + injection
+			gate = self.gate_conv(self.z_conv(x) + self.x_conv(injection)).sigmoid()
+			x = x * gate + (1 - gate) * injection
 		x = self.conv_in(x)
 		x = self.conv1(F.relu(self.bn2(x)))
 		x = self.conv2(F.relu(self.bn3(x)))
