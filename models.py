@@ -92,7 +92,7 @@ class MDEQModelBackbone(nn.Module) :
 
 class MDEQModelYourModel(MDEQModelBackbone) :
 	def __init__(self, cfg: dict[str: Any]):
-		super(MDEQModelYourModel, self).__init__(cfg, ModelF(), ModelInjection())
+		super(MDEQModelYourModel, self).__init__(cfg, ModelF(cfg), ModelInjection(cfg))
 
 	def forward(self, x: torch.Tensor, train_step = -1, **kwargs) :
 		"""
